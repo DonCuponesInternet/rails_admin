@@ -8,7 +8,7 @@
 
 - if field.optional? && field.errors.blank? && file && field.delete_method
   %a.btn.btn-info.btn-remove-image{href: '#', :'data-toggle' => 'button', role: 'button', onclick: "$(this).siblings('[type=checkbox]').click(); $(this).siblings('.toggle').toggle('slow'); jQuery(this).toggleClass('btn-danger btn-info'); return false;"}
-    %i.fa.icon-white.fa.icon-trash
+    %i.fa.icon-white.fa.fa-trash-o
     = I18n.t('admin.actions.delete.menu').capitalize + " #{field.label.downcase}"
 
   = form.check_box(field.delete_method, style: 'display:none;')
