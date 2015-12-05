@@ -44,7 +44,7 @@ module RailsAdmin
         end
 
         register_instance_option :link_icon do
-          'fa-pencil'
+          'fa fa-pencil'
         end
       end
     end
