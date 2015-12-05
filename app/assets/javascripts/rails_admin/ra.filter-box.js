@@ -143,7 +143,7 @@
     var not_selected_select = $(this).siblings('select:hidden');
     not_selected_select.attr('name', not_selected_select.data('name')).show('slow');
     selected_select.attr('name', null).hide('slow');
-    $(this).find('i').toggleClass("icon-plus icon-minus")
+    $(this).find('i').toggleClass("fa fa-plus icon-minus")
   });
 
   $(document).on('change', "#filters_box .switch-additionnal-fieldsets", function(e) {
