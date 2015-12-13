@@ -80,7 +80,11 @@ module RailsAdmin
           klass
         end
       end
-
+      
+      register_instance_option :edit_first do
+        false
+      end
+      
       register_instance_option :navigation_label do
         @navigation_label ||= begin
           if (parent_module = abstract_model.model.parent) != Object

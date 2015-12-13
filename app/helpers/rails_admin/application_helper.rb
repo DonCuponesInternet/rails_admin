@@ -97,7 +97,8 @@ module RailsAdmin
     def navigation(nodes_stack, nodes, level = 0)
       nodes.collect do |node|
         model_param = node.abstract_model.to_param
-        url         = url_for(action: :index, controller: 'rails_admin/main', model_name: model_param)
+        action = node.edit_first ? :edit_first : :index
+        url         = url_for(action: action, controller: 'rails_admin/main', model_name: model_param)
         level_class = " nav-level-#{level}" if level > 0
         nav_icon = node.navigation_icon ? %(<i class="#{node.navigation_icon}"></i>).html_safe : ''
         li = content_tag :li, data: {model: model_param} do
