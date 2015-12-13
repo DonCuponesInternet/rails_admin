@@ -32,7 +32,9 @@ module RailsAdmin
               if @object.save
                 @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
                 respond_to do |format|
-                  format.html { redirect_to_on_success }
+                  format.html {
+                    redirect_to :back, flash: {success: redirect_to_on_success_caption}
+                  }
                   format.js { render json: {id: @object.id.to_s, label: @model_config.with(object: @object).object_label} }
                 end
               else

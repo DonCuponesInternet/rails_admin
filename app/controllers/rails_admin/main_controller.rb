@@ -73,9 +73,13 @@ module RailsAdmin
       reversed_sort = (field ? field.sort_reverse? : model_config.list.sort_reverse?)
       {sort: column, sort_reverse: (params[:sort_reverse] == reversed_sort.to_s)}
     end
-
+    
+    def redirect_to_on_success_caption
+      t('admin.flash.successful', name: @model_config.label, action: t("admin.actions.#{@action.key}.done"))
+    end
+    
     def redirect_to_on_success
-      notice = t('admin.flash.successful', name: @model_config.label, action: t("admin.actions.#{@action.key}.done"))
+      notice = redirect_to_on_success_caption
       if params[:_add_another]
         redirect_to new_path(return_to: params[:return_to]), flash: {success: notice}
       elsif params[:_add_edit]
