@@ -291,7 +291,7 @@ module RailsAdmin
         end
 
         def generic_help
-          (required? ? I18n.translate('admin.form.required') : I18n.translate('admin.form.optional')) + '. '
+          (required? ? I18n.translate('admin.form.required') : I18n.translate('admin.form.optional'))
         end
 
         def generic_field_help
