@@ -140,6 +140,16 @@ module RailsAdmin
     # parent => :root, :collection, :member
     def menu_for(parent, abstract_model = nil, object = nil, only_icon = false) # perf matters here (no action view trickery)
       actions = actions(parent, abstract_model, object).select { |a| a.http_methods.include?(:get) }
+      actions.reject!{|action|
+        included = RailsAdminConfiguration::CLASSES_WITH_EDIT_FIRST.include?(object.class)
+        if action.class == RailsAdmin::Config::Actions::Edit
+          included
+        elsif action.class == RailsAdmin::Config::Actions::EditFirst
+          !included
+        else
+          false
+        end
+      }
       actions.collect do |action|
         wording = wording_for(:menu, action)
         %(
