@@ -6,9 +6,10 @@ module RailsAdmin
       module Types
         class BelongsToAssociation < RailsAdmin::Config::Fields::Association
           RailsAdmin::Config::Fields::Types.register(self)
-
+                    
           register_instance_option :formatted_value do
-            (o = value) && o.send(associated_model_config.object_label_method)
+            label_method = associated_model_config.filtering_select_to_s ? :filtering_select_to_s : associated_model_config.object_label_method
+            (o = value) && o.send(label_method)
           end
 
           register_instance_option :sortable do

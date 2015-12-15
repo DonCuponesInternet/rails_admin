@@ -17,8 +17,8 @@
   edit_url = authorized?(:edit, config.abstract_model) ? edit_path(model_name: config.abstract_model.to_param, modal: true, id: '__ID__') : ''
 
   xhr = !field.associated_collection_cache_all
-
-  collection = xhr ? [["ID #{selected_id} - #{selected_name}", selected_id]] : controller.list_entries(config, :index, field.associated_collection_scope, false).map { |o| ["ID #{associated_primary_key} - #{o.send(field.associated_object_label_method)}", o.send(field.associated_primary_key)] }
+  
+  collection = xhr ? [[selected_name, selected_id]] : controller.list_entries(config, :index, field.associated_collection_scope, false).map { |o| ["ID #{associated_primary_key} - #{o.send(field.associated_object_label_method)}", o.send(field.associated_primary_key)] }
 
   js_data = {
     xhr: xhr,

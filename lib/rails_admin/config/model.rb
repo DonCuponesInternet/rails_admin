@@ -55,7 +55,11 @@ module RailsAdmin
       register_instance_option :object_label_method do
         @object_label_method ||= Config.label_methods.detect { |method| (@dummy_object ||= abstract_model.model.new).respond_to? method } || :rails_admin_default_object_label_method
       end
-
+      
+      register_instance_option :filtering_select_to_s do
+        nil
+      end
+      
       register_instance_option :label do
         (@label ||= {})[::I18n.locale] ||= abstract_model.model.model_name.human
       end
