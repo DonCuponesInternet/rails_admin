@@ -39,7 +39,7 @@
           return { label: $(this).text(), value: this.value };
         }).toArray();
       }
-      var filtering_select = $('<div class="input-group filtering-select col-md-6 col-sm-10 col-xs-12" style="float:left"></div>')
+      var filtering_select = $('<div class="input-group filtering-select col-xs-12" style="float:left"></div>')
       var input = this.input = $('<input type="text" class="complete-width">')
         .val(value)
         .addClass("form-control ra-filtering-select-input")
