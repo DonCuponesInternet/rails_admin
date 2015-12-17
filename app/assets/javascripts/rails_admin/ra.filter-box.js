@@ -22,10 +22,7 @@
           var control = '<select class="input-sm form-control" name="' + value_name + '">' +
             '<option value="_discard">...</option>' +
             '<option value="true"' + (field_value == "true" ? 'selected="selected"' : '') + '>' + RailsAdmin.I18n.t("true") + '</option>' +
-            '<option value="false"' + (field_value == "false" ? 'selected="selected"' : '') + '>' + RailsAdmin.I18n.t("false") + '</option>' +
-            '<option disabled="disabled">---------</option>' +
-            '<option ' + (field_value == "_present" ? 'selected="selected"' : '') + ' value="_present">' + RailsAdmin.I18n.t("is_present") + '</option>' +
-            '<option ' + (field_value == "_blank"   ? 'selected="selected"' : '') + ' value="_blank"  >' + RailsAdmin.I18n.t("is_blank") + '</option>' +
+            '<option value="false"' + (field_value == "false" ? 'selected="selected"' : '') + '>' + RailsAdmin.I18n.t("false") + '</option>'
           '</select>';
           break;
         case 'date':
