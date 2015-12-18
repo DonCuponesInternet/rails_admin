@@ -146,6 +146,8 @@ module RailsAdmin
           included
         elsif action.class == RailsAdmin::Config::Actions::EditFirst
           !included
+        elsif action.class == RailsAdmin::Config::Actions::EditEventCoupons
+          (abstract_model.model_name.constantize != Event) rescue true
         else
           false
         end
