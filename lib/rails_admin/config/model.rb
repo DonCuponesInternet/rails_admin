@@ -89,6 +89,10 @@ module RailsAdmin
         false
       end
       
+      register_instance_option :edit_event_coupons do
+        false
+      end
+      
       register_instance_option :navigation_label do
         @navigation_label ||= begin
           if (parent_module = abstract_model.model.parent) != Object
