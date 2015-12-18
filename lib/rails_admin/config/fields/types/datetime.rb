@@ -40,6 +40,7 @@ module RailsAdmin
           register_instance_option :strftime_format do
             fallback = ::I18n.t(date_format, scope: i18n_scope, locale: :en)
             ::I18n.t(date_format, scope: i18n_scope, default: fallback).to_s
+            '%Y/%m/%d %H:%M'
           end
 
           register_instance_option :datepicker_options do

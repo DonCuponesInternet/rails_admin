@@ -34,7 +34,7 @@ $(document).on 'rails_admin.dom_ready', (e, content) ->
 
     content.find('[data-datetimepicker]').each ->
       options = $(this).data('options')
-      $.extend(options, {locale: RailsAdmin.I18n.locale})
+      $.extend(options, {locale: RailsAdmin.I18n.locale, format: 'YYYY/MM/DD HH:mm'})
       $(this).datetimepicker options
 
     # enumeration
