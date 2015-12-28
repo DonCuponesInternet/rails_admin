@@ -99,7 +99,10 @@
               - value = property.pretty_value
               %td{class: "#{property.css_class} #{property.type_css_class}", title: strip_tags(value.to_s)}
                 - if property.name == :id
-                  = link_to value, show_path(model_name: property.abstract_model.param_key, id: value)
+                  - if authorized?(:edit, property.abstract_model)
+                    = link_to value, edit_path(model_name: property.abstract_model.param_key, id: value)
+                  - else
+                    = link_to value, show_path(model_name: property.abstract_model.param_key, id: value)
                 - else
                   = value
             - if @other_right_link ||= other_right && index_path(params.merge(set: (params[:set].to_i + 1)))
