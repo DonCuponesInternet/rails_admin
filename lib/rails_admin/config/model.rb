@@ -89,6 +89,10 @@ module RailsAdmin
         false
       end
       
+      register_instance_option :top100_stores do
+        false
+      end
+      
       register_instance_option :edit_event_coupons do
         false
       end
