@@ -14,6 +14,7 @@ module RailsAdmin
 
         register_instance_option :controller do
           proc do
+            @links = @action.instance_variable_get('@shortcut_links_registered').call # this should be simply `@action.shortcut_links.call` but it doesn't work, for an unknown reason.
             @history = @auditing_adapter && @auditing_adapter.latest || []
             if @action.statistics?
               @abstract_models = RailsAdmin::Config.visible_models(controller: self).collect(&:abstract_model)
@@ -45,6 +46,11 @@ module RailsAdmin
         register_instance_option :statistics? do
           true
         end
+        
+        register_instance_option :shortcut_links do
+          ->(){ [] }
+        end
+        
       end
     end
   end

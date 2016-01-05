@@ -28,6 +28,12 @@
                   = @count[abstract_model.model.name]
             %td.links
               %ul.inline.list-inline= menu_for :collection, abstract_model, nil, true
+
+%ul
+  - @links.each do |href, text|
+    %li{style: 'list-style-type: none'}
+      = link_to href, text
+
 - if @auditing_adapter && authorized?(:history_index)
   #block-tables.block
     .content
