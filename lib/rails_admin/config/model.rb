@@ -93,6 +93,10 @@ module RailsAdmin
         false
       end
       
+      register_instance_option :latest25_stores do
+        false
+      end
+      
       register_instance_option :edit_event_coupons do
         false
       end
