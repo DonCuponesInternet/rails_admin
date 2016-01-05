@@ -38,8 +38,8 @@ module RailsAdmin
           end
 
           register_instance_option :strftime_format do
-            fallback = ::I18n.t(date_format, scope: i18n_scope, locale: :en)
-            ::I18n.t(date_format, scope: i18n_scope, default: fallback).to_s
+            # hardcoded value, essential for the datepicker to work (due to rails_admin faulty design). don't change this.
+            # for customizing how dates look in tables, override/custome something else instead.
             '%Y/%m/%d %H:%M'
           end
 
