@@ -53,7 +53,7 @@ module RailsAdmin
         end
 
         register_instance_option :queryable? do
-          !virtual?
+          false
         end
 
         register_instance_option :filterable? do
