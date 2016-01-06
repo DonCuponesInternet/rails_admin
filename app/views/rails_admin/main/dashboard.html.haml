@@ -29,7 +29,9 @@
             %td.links
               %ul.inline.list-inline= menu_for :collection, abstract_model, nil, true
 
-%ul
+%h2 Enlaces
+
+%ul{style: 'padding: 10px 20px'}
   - @links.each do |href, text|
     %li{style: 'list-style-type: none'}
       = link_to href, text
