@@ -45,20 +45,28 @@
 
 #list
   = form_tag(index_path(params.except(*%w[page f query])), method: :get, class: "pjax-form form-inline") do
-    .well
-      %span#filters_box
-      %hr.filters_box{style: "display:#{ordered_filters.empty? ? 'none' : 'block'}"}
-      .input-group
-        %input.form-control.input-small{name: "query", type: "search", value: query, placeholder: t("admin.misc.filter")}
-        %span.input-group-btn
-          %button.btn.btn-primary{type: "submit", :'data-disable-with' => "<i class='icon-white icon-refresh'></i> ".html_safe + t("admin.misc.refresh")}
-            %i.fa.icon-white.fa.fa-refresh
-            = t("admin.misc.refresh")
-          %button#remove_filter.btn.btn-info{title: "Reset filters"}
-            %i.fa.icon-white.fa.fa-times
-      - if export_action
-        %span{style: 'float:right'}= link_to wording_for(:link, export_action), export_path(params.except('set').except('page')), class: 'btn btn-info'
-
+    
+    - should_render_filter_box = queryable_fields.any?
+    
+    - if should_render_filter_box || export_action # only render .well if the condition is true, else avoid rendering an empty `.well`.
+      .well
+        .row
+          - if should_render_filter_box
+            .col-xs-8
+              %span#filters_box
+              %hr.filters_box{style: "display:#{ordered_filters.empty? ? 'none' : 'block'}"}
+              .input-group.complete-width
+                %input.form-control.input-small{name: "query", type: "search", value: query, placeholder: queryable_fields_placeholder}
+                %span.input-group-btn
+                  %button.btn.btn-primary{type: "submit", :'data-disable-with' => "<i class='icon-white icon-refresh'></i> ".html_safe + t("admin.misc.refresh")}
+                    %i.fa.icon-white.fa.fa-refresh
+                    = t("admin.misc.refresh")
+                  %button#remove_filter.btn.btn-info{title: "Reset filters"}
+                    %i.fa.icon-white.fa.fa-times
+          - if export_action
+            %div{style: 'text-align: right', class: "col-xs-#{should_render_filter_box ? 4 : 12}"}
+              %span= link_to wording_for(:link, export_action), export_path(params.except('set').except('page')), class: 'btn btn-info'
+  
   - unless @model_config.list.scopes.empty?
     %ul.nav.nav-tabs#scope_selector
       - @model_config.list.scopes.each_with_index do |scope, index|

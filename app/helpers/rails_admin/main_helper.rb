@@ -39,6 +39,18 @@ module RailsAdmin
     def filterable_fields
       @filterable_fields ||= @model_config.list.fields.select(&:filterable?)
     end
+    
+    def queryable_fields
+      @queryable_fields ||= @model_config.list.fields.select(&:queryable?)
+    end
+    
+    def queryable_fields_placeholder
+      model = @model_config.abstract_model.to_param
+      queryable_fields.map{|f|
+        name = f.name
+        I18n.t!("activerecord.attributes.#{model}.#{name}") rescue name.to_s.titleize
+      }.join(', ')
+    end
 
     def ordered_filters
       return @ordered_filters if @ordered_filters.present?
