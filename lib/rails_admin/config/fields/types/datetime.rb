@@ -6,10 +6,13 @@ module RailsAdmin
     module Fields
       module Types
         class Datetime < RailsAdmin::Config::Fields::Base
+          
+          STRFTIME_FORMAT = '%Y/%m/%d %H:%M'
+          
           RailsAdmin::Config::Fields::Types.register(self)
 
           def parser
-            @parser ||= RailsAdmin::Support::Datetime.new(strftime_format)
+            @parser ||= RailsAdmin::Support::Datetime.new(STRFTIME_FORMAT)
           end
 
           def parse_value(value)
@@ -40,7 +43,7 @@ module RailsAdmin
           register_instance_option :strftime_format do
             # hardcoded value, essential for the datepicker to work (due to rails_admin faulty design). don't change this.
             # for customizing how dates look in tables, override/custome something else instead.
-            '%Y/%m/%d %H:%M'
+            STRFTIME_FORMAT
           end
 
           register_instance_option :datepicker_options do
@@ -63,7 +66,7 @@ module RailsAdmin
 
           register_instance_option :formatted_value do
             if time = (value || default_value)
-              ::I18n.l(time, format: strftime_format)
+              ::I18n.l(time, format: strftime_format) # don't use the STRFTIME_FORMAT constant here - not needed
             else
               ''.html_safe
             end
