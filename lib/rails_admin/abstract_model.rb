@@ -204,6 +204,7 @@ module RailsAdmin
           when 'today'     then today
           when 'yesterday' then yesterday
           when 'this_week' then this_week
+          when 'this_month' then this_month
           when 'last_week' then last_week
           else default
           end
@@ -220,7 +221,11 @@ module RailsAdmin
         def this_week
           [Date.today.beginning_of_week, Date.today.end_of_week]
         end
-
+        
+        def this_month
+          [Date.today.beginning_of_month, Date.today.end_of_month]
+        end
+        
         def last_week
           [1.week.ago.to_date.beginning_of_week,
            1.week.ago.to_date.end_of_week]

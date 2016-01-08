@@ -38,6 +38,7 @@
             '<option ' + (field_operator == "today"   ? 'selected="selected"' : '') + ' value="today">' + RailsAdmin.I18n.t("today") + '</option>' +
             '<option ' + (field_operator == "yesterday"   ? 'selected="selected"' : '') + ' value="yesterday">' + RailsAdmin.I18n.t("yesterday") + '</option>' +
             '<option ' + (field_operator == "this_week"   ? 'selected="selected"' : '') + ' value="this_week">' + RailsAdmin.I18n.t("this_week") + '</option>' +
+            '<option ' + (field_operator == "this_month"   ? 'selected="selected"' : '') + ' value="this_month">' + RailsAdmin.I18n.t("this_month") + '</option>' +
             '<option ' + (field_operator == "last_week"   ? 'selected="selected"' : '') + ' value="last_week">' + RailsAdmin.I18n.t("last_week") + '</option>' +
             '<option disabled="disabled">---------</option>' +
             '<option ' + (field_operator == "_not_null" ? 'selected="selected"' : '') + ' value="_not_null">' + RailsAdmin.I18n.t("is_present") + '</option>' +
