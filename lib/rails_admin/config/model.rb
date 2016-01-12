@@ -101,6 +101,10 @@ module RailsAdmin
         false
       end
       
+      register_instance_option :new_unique_coupon do
+        false
+      end
+      
       register_instance_option :navigation_label do
         @navigation_label ||= begin
           if (parent_module = abstract_model.model.parent) != Object

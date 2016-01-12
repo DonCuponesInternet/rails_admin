@@ -150,6 +150,8 @@ module RailsAdmin
           (abstract_model.model_name.constantize != Store) rescue true
         elsif action.class == RailsAdmin::Config::Actions::EditEventCoupons
           (abstract_model.model_name.constantize != Event) rescue true
+        elsif action.class == RailsAdmin::Config::Actions::NewUniqueCoupon
+          (abstract_model.model_name.constantize != Coupon) rescue true
         else
           false
         end
