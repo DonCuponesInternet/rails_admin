@@ -5,6 +5,9 @@ module RailsAdmin
     module Fields
       module Types
         class CKEditor < RailsAdmin::Config::Fields::Types::Text
+          
+          BASE_LOCATION = ->(){ "#{Rails.application.nginx_prefix}/ck_editor_assets/" }
+          
           # Register field type for the type loader
           RailsAdmin::Config::Fields::Types.register(self)
 
@@ -21,7 +24,7 @@ module RailsAdmin
 
           # Use this if you want to point to a cloud instances of the base CKeditor
           register_instance_option :base_location do
-            "#{Rails.application.nginx_prefix}/ck_editor_assets/"
+            BASE_LOCATION.call
           end
 
           register_instance_option :partial do
