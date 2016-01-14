@@ -65,11 +65,18 @@ module RailsAdmin
           end
 
           register_instance_option :formatted_value do
-            if time = (value || default_value)
-              ::I18n.l(time, format: strftime_format) # don't use the STRFTIME_FORMAT constant here - not needed
-            else
-              ''.html_safe
+            time = value || default_value || DateTime.current
+            if bindings[:object].class == Coupon
+              unless bindings[:object].id
+                time = time.change(sec: 0)
+                if name == :start_date
+                  time = time.change(min: 1)
+                elsif name == :end_date
+                  time = time.change(min: 59)
+                end
+              end
             end
+            ::I18n.l(time, format: strftime_format) # don't use the STRFTIME_FORMAT constant here - not needed
           end
 
           register_instance_option :partial do
