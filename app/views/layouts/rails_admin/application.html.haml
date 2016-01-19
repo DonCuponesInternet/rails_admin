@@ -4,6 +4,13 @@
     %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}
     %meta{content: "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
     %meta{content: "NONE,NOARCHIVE", name: "robots"}
+    - if Rails.env.test?
+      :javascript
+        window.errors = []
+        window.onerror = function(a, b, c){
+          window.errors.push([a, b, c]);
+          return false; // false: don't swallow exceptions.
+        }
     = csrf_meta_tag
     = stylesheet_link_tag asset_path('font-awesome.css'), media: :all
     = stylesheet_link_tag "rails_admin/rails_admin.css", media: :all
