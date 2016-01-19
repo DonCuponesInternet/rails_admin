@@ -45,7 +45,7 @@ module RailsAdmin
     end
 
     def input_for(field)
-      css = 'col-sm-10 controls'
+      css = "col-sm-10 controls #{field.parent.abstract_model.to_param}-#{field.name}-wrapper"
       css += ' has-error' if field.errors.present?
       @template.content_tag(:div, class: css) do
         field_for(field) +
