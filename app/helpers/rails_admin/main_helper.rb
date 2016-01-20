@@ -55,7 +55,11 @@ module RailsAdmin
     def ordered_filters
       return @ordered_filters if @ordered_filters.present?
       @index = 0
-      @ordered_filters = (params[:f] || @model_config.list.filters).inject({}) do |memo, filter|
+      
+      the_filters = params[:f] || @model_config.list.filters
+      (the_filters = [["id", {"id"=>{"o"=>"default", "v"=>["", "", ""]}}]]) if the_filters.blank?
+      
+      @ordered_filters = the_filters.inject({}) do |memo, filter|
         field_name = filter.is_a?(Array) ? filter.first : filter
         (filter.is_a?(Array) ? filter.last : {(@index += 1) => {'v' => ''}}).each do |index, filter_hash|
           if filter_hash['disabled'].blank?
