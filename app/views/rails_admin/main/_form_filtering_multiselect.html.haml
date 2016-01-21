@@ -20,7 +20,18 @@
     i = 0
     controller.list_entries(config, :index, field.associated_collection_scope, false).map { |o| [o.send(field.associated_object_label_method), o.send(field.associated_primary_key)] }.sort_by {|a| [selected_ids.index(a[1]) || selected_ids.size, i+=1] }
   end
-
+  
+  editing_coupons_field = @abstract_model.model == Event && field.name == :coupons
+  
+  collection.each{|a|
+    a[2] ||= {}
+    if editing_coupons_field
+      item = selected.detect{|coupon| coupon.id == a[1] }
+      a[2]['class'] = "coupon-publication-status-#{item.publication_status}"
+    end
+    a
+  }
+  
   js_data = {
     xhr: xhr,
     :'edit-url' => (authorized?(:edit, config.abstract_model) ? edit_path(model_name: config.abstract_model.to_param, id: '__ID__') : ''),

@@ -186,7 +186,11 @@
           widget.collection.html('');
           for (i in filtered) {
             widget.collection.append(
-              $('<option></option>').attr('value', matches[filtered[i]].id).attr('title', matches[filtered[i]].label).text(matches[filtered[i]].label)
+              $('<option></option>').
+                attr('value', matches[filtered[i]].id).
+                attr('title', matches[filtered[i]].label).
+                text(matches[filtered[i]].label).
+                addClass(matches[filtered[i]]['class'])
             );
           }
         } else {
