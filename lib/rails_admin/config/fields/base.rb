@@ -55,6 +55,10 @@ module RailsAdmin
         register_instance_option :queryable? do
           false
         end
+        
+        register_instance_option :bulkable do
+          false # this option MUST be false by default. bulkable attributes must be whitelisted on the Admin side. else, users can unintendely modify data.
+        end
 
         register_instance_option :filterable? do
           !!searchable # rubocop:disable DoubleNegation
