@@ -1,3 +1,4 @@
+require 'rails_admin/doncupones_helpers'
 require 'rails_admin/config/fields/base'
 require 'rails_admin/support/datetime'
 
@@ -65,20 +66,33 @@ module RailsAdmin
           end
 
           register_instance_option :formatted_value do
-            time = value || default_value || DateTime.current
-            if bindings[:object].class == Coupon
-              unless bindings[:object].id
-                time = time.change(sec: 0)
-                if name == :start_date
-                  time = time.change(min: 1)
-                elsif name == :end_date
-                  time = time.change(min: 59)
+            if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(@bindings.fetch(:controller))
+              value = RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, name)
+              if value
+                localized_time value
+              else
+                nil
+              end
+            else
+              time = value || default_value || DateTime.current
+              if bindings[:object].class == Coupon
+                unless bindings[:object].id
+                  time = time.change(sec: 0)
+                  if name == :start_date
+                    time = time.change(min: 1)
+                  elsif name == :end_date
+                    time = time.change(min: 59)
+                  end
                 end
               end
+              localized_time time
             end
+          end
+          
+          def localized_time time
             ::I18n.l(time, format: strftime_format) # don't use the STRFTIME_FORMAT constant here - not needed
           end
-
+          
           register_instance_option :partial do
             :form_datetime
           end

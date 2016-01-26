@@ -275,14 +275,7 @@ module RailsAdmin
         def value
           controller = @bindings[:controller]
           if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(controller)
-            values = bindings[:object].class.find(controller.params[:bulk_ids]).map{|object|
-              object.safe_send(name)
-            }
-            if values.uniq.size == 1 # i.e., if all the values are the same
-              values.first
-            else
-              nil
-            end
+            RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, name)
           else
             bindings[:object].safe_send(name)
           end
