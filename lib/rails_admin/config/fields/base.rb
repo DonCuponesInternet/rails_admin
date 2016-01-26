@@ -1,3 +1,4 @@
+require 'rails_admin/doncupones_helpers'
 require 'rails_admin/config/proxyable'
 require 'rails_admin/config/configurable'
 require 'rails_admin/config/hideable'
@@ -272,7 +273,19 @@ module RailsAdmin
 
         # Reader for field's value
         def value
-          bindings[:object].safe_send(name)
+          controller = @bindings[:controller]
+          if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(controller)
+            values = bindings[:object].class.find(controller.params[:bulk_ids]).map{|object|
+              object.safe_send(name)
+            }
+            if values.uniq.size == 1 # i.e., if all the values are the same
+              values.first
+            else
+              nil
+            end
+          else
+            bindings[:object].safe_send(name)
+          end
         rescue NoMethodError => e
           raise e.exception <<-EOM.gsub(/^\s{10}/, '')
           #{e.message}
