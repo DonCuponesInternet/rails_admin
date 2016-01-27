@@ -94,7 +94,12 @@ module RailsAdmin
 
         # Reader for the association's value unformatted
         def value
-          bindings[:object].send(association.name)
+          method_name = association.name
+          if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(bindings[:controller])
+            RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, method_name)
+          else
+            bindings[:object].send(method_name)
+          end
         end
 
         # has many?

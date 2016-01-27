@@ -33,7 +33,11 @@ module RailsAdmin
           end
 
           def selected_id
-            bindings[:object].send(foreign_key)
+            if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(bindings[:controller])
+              value.try :id
+            else
+              bindings[:object].send(foreign_key)
+            end
           end
 
           def method_name

@@ -56,7 +56,7 @@ module RailsAdmin
         @object_label_method ||= Config.label_methods.detect { |method| (@dummy_object ||= abstract_model.model.new).respond_to? method } || :rails_admin_default_object_label_method
       end
       
-      register_instance_option :filtering_select_to_s do
+      register_instance_option :filtering_select_to_s do # deprecated / completetely unused method.
         nil
       end
       
