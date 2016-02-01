@@ -57,7 +57,18 @@ module RailsAdmin
       @index = 0
       
       the_filters = params[:f] || @model_config.list.filters
-      (the_filters = [["id", {"id"=>{"o"=>"default", "v"=>["", "", ""]}}]]) if the_filters.blank?
+      
+      if the_filters.blank?
+        
+        the_filters = [["id", {"id"=>{"o"=>"default", "v"=>["", "", ""]}}]]
+        
+        if @abstract_model.try(:model) == Coupon
+          
+          the_filters << ["store", {"store"=>{"o"=>"default", "v"=>[""]}}]
+          
+        end
+        
+      end
       
       @ordered_filters = the_filters.inject({}) do |memo, filter|
         field_name = filter.is_a?(Array) ? filter.first : filter
