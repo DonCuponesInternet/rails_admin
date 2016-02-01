@@ -67,15 +67,16 @@ module RailsAdmin
 
           register_instance_option :formatted_value do
             if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(@bindings.fetch(:controller))
-              value = RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, name)
+              time = RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, name)
               if value
-                localized_time value
+                localized_time time
               else
                 nil
               end
             else
-              time = value || default_value || DateTime.current
-              if bindings[:object].class == Coupon
+              time = value || default_value
+              (time ||= DateTime.current) if ['new', 'edit', 'edit_first'].include?(bindings[:controller].action_name)
+              if time && (bindings[:object].class == Coupon)
                 unless bindings[:object].id
                   time = time.change(sec: 0)
                   if name == :start_date
@@ -85,7 +86,7 @@ module RailsAdmin
                   end
                 end
               end
-              localized_time time
+              localized_time time if time
             end
           end
           
