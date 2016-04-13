@@ -328,6 +328,7 @@ module RailsAdmin
         end
 
         def form_default_value
+          return nil unless bindings
           (default_value if bindings[:object].new_record? && value.nil?)
         end
 
