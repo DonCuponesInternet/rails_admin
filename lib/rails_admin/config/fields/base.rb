@@ -273,8 +273,8 @@ module RailsAdmin
 
         # Reader for field's value
         def value
-          controller = @bindings[:controller]
-          if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(controller)
+          controller = @bindings && @bindings[:controller]
+          if controller && RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(controller)
             RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, name)
           else
             bindings[:object].safe_send(name)
