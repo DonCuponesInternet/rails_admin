@@ -91,7 +91,7 @@ module RailsAdmin
           end
           
           def localized_time time
-            ::I18n.l(time, format: strftime_format) # don't use the STRFTIME_FORMAT constant here - not needed
+            ::I18n.l(time, format: strftime_format, locale: :es) # don't use the STRFTIME_FORMAT constant here - not needed
           end
           
           register_instance_option :partial do
