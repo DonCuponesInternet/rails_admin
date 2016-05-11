@@ -154,6 +154,8 @@ module RailsAdmin
           (abstract_model.model_name.constantize != Coupon) rescue true
         elsif action.class == RailsAdmin::Config::Actions::BulkEdit
           true
+        elsif action.class == RailsAdmin::Config::Actions::ByActivity
+          (abstract_model.model_name.constantize != Store) rescue true
         else
           false
         end
