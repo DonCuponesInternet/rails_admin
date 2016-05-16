@@ -12,7 +12,7 @@
           return false; // false: don't swallow exceptions.
         }
     = csrf_meta_tag
-    %link{:href => image_url("favicon#{'_el_universal' if ENV['WHITE_LABEL_HOST'].present?}.ico"), :rel => "shortcut icon", :type => "image/x-icon"}
+    %link{:href => image_url("favicon#{'_el_universal' if I18n.locale == :"el-universal"}.ico"), :rel => "shortcut icon", :type => "image/x-icon"}
     = stylesheet_link_tag asset_path('font-awesome.css'), media: :all
     = stylesheet_link_tag "rails_admin/rails_admin.css", media: :all
     = javascript_include_tag "rails_admin/rails_admin.js"
@@ -25,7 +25,7 @@
       RailsAdmin.I18n.init('#{I18n.locale}', JSON.parse("#{locale_config}"))
   %body.rails_admin
     #loading.label.label-warning{style: 'display:none; position:fixed; right:20px; bottom:20px; z-index:100000'}= t('admin.loading')
-    %nav.navbar.navbar-default.navbar-fixed-top{style: "#{"background-color: #DFEFFF" if ENV['WHITE_LABEL_HOST'].present?}"}
+    %nav.navbar.navbar-default.navbar-fixed-top{style: "#{"background-color: #{{:"el-universal" => '#DFEFFF', milenio: "#FFCFCF"}.fetch(I18n.locale)}" if ENV['WHITE_LABEL_HOST'].present?}"}
       = render "layouts/rails_admin/navigation"
     .container-fluid
       .row
