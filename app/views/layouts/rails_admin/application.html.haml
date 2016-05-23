@@ -12,7 +12,7 @@
           return false; // false: don't swallow exceptions.
         }
     = csrf_meta_tag
-    %link{:href => image_url("favicon#{'_el_universal' if I18n.locale == :"el-universal"}.ico"), :rel => "shortcut icon", :type => "image/x-icon"}
+    %link{:href => image_url("favicon#{"-#{I18n.locale}" if white_label?"}.ico"), :rel => "shortcut icon", :type => "image/x-icon"}
     = stylesheet_link_tag asset_path('font-awesome.css'), media: :all
     = stylesheet_link_tag "rails_admin/rails_admin.css", media: :all
     = javascript_include_tag "rails_admin/rails_admin.js"
