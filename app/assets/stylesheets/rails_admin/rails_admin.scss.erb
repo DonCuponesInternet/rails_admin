@@ -157,3 +157,30 @@
   height: 20px;
   background-position: -90px 0;
 }
+
+.el-universal-menu {
+  background-color: #DFEFFF
+}
+
+.milenio-menu {
+  $top: rgb(196, 25, 0);
+  $bottom: rgb(150, 19, 0);
+  
+  /* IE10+ */ 
+  background-image: -ms-linear-gradient(top, $top 0%, $bottom 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top, $top 0%, $bottom 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(top, $top 0%, $bottom 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, $top), color-stop(100, $bottom));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top, $top 0%, $bottom 100%);
+
+  /* W3C Markup */ 
+  background-image: linear-gradient(to bottom, $top 0%, $bottom 100%);
+}
