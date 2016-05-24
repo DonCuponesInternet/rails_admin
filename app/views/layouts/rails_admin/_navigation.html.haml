@@ -5,11 +5,11 @@
       %span.fa.icon-bar
       %span.fa.icon-bar
       %span.fa.icon-bar
-    %a.navbar-brand.pjax{href: dashboard_path, style: "#{"padding-top: 0" if I18n.locale == :milenio}"}
+    %a.navbar-brand.pjax{href: dashboard_path, style: "#{"padding-top: 0" if white_label?}"}
       - unless white_label?
         %i.sprite-flags{style: 'vertical-align: top', class: "flag-#{I18n.locale}"}
-      - if I18n.locale == :milenio
-        = image_tag('header-milenio.png', style: "height: 50px; vertical-align: top")
+      - if white_label?
+        = image_tag("header-#{I18n.locale}.png", style: "height: 50px; vertical-align: top")
       - else
         = _get_plugin_name[0] || 'Rails'
         %small= _get_plugin_name[1] || 'Admin'
