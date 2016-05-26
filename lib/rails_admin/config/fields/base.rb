@@ -277,7 +277,8 @@ module RailsAdmin
           if controller && RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(controller)
             RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, name)
           else
-            bindings[:object].safe_send(name)
+            object = bindings && bindings[:object].presence
+            object.try(:safe_send, name)
           end
         rescue NoMethodError => e
           raise e.exception <<-EOM.gsub(/^\s{10}/, '')
