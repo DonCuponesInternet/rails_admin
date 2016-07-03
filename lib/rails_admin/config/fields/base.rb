@@ -206,7 +206,15 @@ module RailsAdmin
         register_instance_option :active? do
           false
         end
-
+        
+        register_instance_option :permit_param? do
+          false
+        end
+        
+        register_instance_option :do_not_render? do
+          false
+        end
+        
         register_instance_option :visible? do
           returned = true
           (RailsAdmin.config.default_hidden_fields || {}).each do |section, fields|
@@ -215,14 +223,22 @@ module RailsAdmin
           end
           returned
         end
-
+        
+        register_instance_option :visible_or_permit_param? do
+          permit_param? || visible?
+        end
+        
         # columns mapped (belongs_to, paperclip, etc.). First one is used for searching/sorting by default
         register_instance_option :children_fields do
           []
         end
 
         register_instance_option :render do
-          bindings[:view].render partial: "rails_admin/main/#{partial}", locals: {field: self, form: bindings[:form]}
+          if do_not_render?
+            ""
+          else
+            bindings[:view].render partial: "rails_admin/main/#{partial}", locals: {field: self, form: bindings[:form]}
+          end
         end
 
         def editable?

@@ -40,27 +40,29 @@ module RailsAdmin
               send(option_name)
             end
           end
-
+          
+          sanitized_option_name = option_name.to_s.gsub('-', '_')
+          
           # Define getter/setter by the option name
           scope.send(:define_method, option_name) do |*args, &block|
             if !args[0].nil? || block # rubocop:disable NonNilCheck
               # Invocation with args --> This is the declaration of the option, i.e. setter
-              instance_variable_set("@#{option_name}_registered", args[0].nil? ? block : args[0])
+              instance_variable_set("@#{sanitized_option_name}_registered", args[0].nil? ? block : args[0])
             else
               # Invocation without args nor block --> It's the use of the option, i.e. getter
-              value = instance_variable_get("@#{option_name}_registered")
+              value = instance_variable_get("@#{sanitized_option_name}_registered")
               case value
               when Proc
                 # Track recursive invocation with an instance variable. This prevents run-away recursion
                 # and allows configurations such as
                 # label { "#{label}".upcase }
                 # This will use the default definition when called recursively.
-                if instance_variable_get("@#{option_name}_recurring")
+                if instance_variable_get("@#{sanitized_option_name}_recurring")
                   value = instance_eval(&default)
                 else
-                  instance_variable_set("@#{option_name}_recurring", true)
+                  instance_variable_set("@#{sanitized_option_name}_recurring", true)
                   value = instance_eval(&value)
-                  instance_variable_set("@#{option_name}_recurring", false)
+                  instance_variable_set("@#{sanitized_option_name}_recurring", false)
                 end
               when nil
                 value = instance_eval(&default)

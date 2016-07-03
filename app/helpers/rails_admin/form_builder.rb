@@ -34,6 +34,7 @@ module RailsAdmin
     end
 
     def field_wrapper_for(field, nested_in)
+      return "" if field.do_not_render?
       if field.label
         # do not show nested field if the target is the origin
         unless nested_field_association?(field, nested_in)
