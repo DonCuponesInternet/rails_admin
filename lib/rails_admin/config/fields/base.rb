@@ -215,6 +215,10 @@ module RailsAdmin
           false
         end
         
+        register_instance_option :tab_per_locale_type do
+          nil
+        end
+        
         register_instance_option :visible? do
           returned = true
           (RailsAdmin.config.default_hidden_fields || {}).each do |section, fields|
