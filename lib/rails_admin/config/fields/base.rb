@@ -56,6 +56,14 @@ module RailsAdmin
         register_instance_option :queryable? do
           false
         end
+
+        register_instance_option :actual_name do
+          nil
+        end
+        
+        register_instance_option :wls_instead_of_all do
+          false
+        end
         
         register_instance_option :bulkable do
           false # this option MUST be false by default. bulkable attributes must be whitelisted on the Admin side. else, users can unintendely modify data.
