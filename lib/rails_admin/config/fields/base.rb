@@ -232,6 +232,10 @@ module RailsAdmin
           permit_param? || visible?
         end
         
+        register_instance_option :localized_name_separator do
+          "_"
+        end
+        
         # columns mapped (belongs_to, paperclip, etc.). First one is used for searching/sorting by default
         register_instance_option :children_fields do
           []
