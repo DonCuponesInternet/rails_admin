@@ -61,13 +61,18 @@ module RailsAdmin
       model_config = abstract_model.try(:config)
       object = abstract_model && object.is_a?(abstract_model.model) ? object : nil
       action = RailsAdmin::Config::Actions.find(action.to_sym) if action.is_a?(Symbol) || action.is_a?(String)
-
-      capitalize_first_letter I18n.t(
-        "admin.actions.#{action.i18n_key}.#{label}",
-        model_label: model_config && model_config.label,
-        model_label_plural: model_config && model_config.label_plural,
-        object_label: model_config && object.try(model_config.object_label_method),
-      )
+      
+      if label == :title && object && object.class.is_a?(SingletonTable)
+        "#{I18n.t("activerecord.models.#{object.class.to_s.underscore}.one")} #{::Config.get_or("country_name", ::Config.get_or("company_name", false, object.locale), object.locale)}"
+      else
+        capitalize_first_letter I18n.t(
+          "admin.actions.#{action.i18n_key}.#{label}",
+          model_label: model_config && model_config.label,
+          model_label_plural: model_config && model_config.label_plural,
+          object_label: model_config && object.try(model_config.object_label_method),
+        )
+      end
+      
     end
 
     def main_navigation
