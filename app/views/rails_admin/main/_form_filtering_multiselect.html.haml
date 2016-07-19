@@ -27,7 +27,7 @@
     a[2] ||= {}
     if editing_coupons_field
       item = selected.detect{|coupon| coupon.id == a[1] }
-      a[2]['class'] = "coupon-publication-status-#{item.publication_status}"
+      (a[2]['class'] = "coupon-publication-status-#{item.publication_status}") if item
     end
     a
   }
