@@ -103,7 +103,12 @@ module RailsAdmin
       nodes.collect do |node|
         model_param = node.abstract_model.to_param
         action = node.edit_first ? :edit_first : :index
-        url         = url_for(action: action, controller: 'rails_admin/main', model_name: model_param)
+        url =
+          if [SearchSuggestion].include?(node.abstract_model.model)
+            url_for(action: :show, controller: 'rails_admin/main', model_name: model_param, id: node.abstract_model.model.instance(main_locale_for_this_country))
+          else
+            url_for(action: action, controller: 'rails_admin/main', model_name: model_param)
+          end
         level_class = " nav-level-#{level}" if level > 0
         nav_icon = node.navigation_icon ? %(<i class="#{node.navigation_icon}"></i>).html_safe : ''
         li = content_tag :li, data: {model: model_param} do
