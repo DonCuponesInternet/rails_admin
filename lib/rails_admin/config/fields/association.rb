@@ -56,7 +56,11 @@ module RailsAdmin
         register_instance_option :associated_collection_cache_all do
           @associated_collection_cache_all ||= (associated_model_config.abstract_model.count < 100)
         end
-
+        
+        register_instance_option :doncupones_scope do
+          nil
+        end
+        
         # determines whether association's elements can be removed
         register_instance_option :removable? do
           association.foreign_key_nullable?

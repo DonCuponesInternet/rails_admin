@@ -28,7 +28,13 @@ module RailsAdmin
         register_instance_option :controller do
           proc do
             @objects ||= list_entries
-
+            
+            the_association_scope = @association.try(:doncupones_scope).presence
+            
+            if the_association_scope
+              @objects = @objects.send(the_association_scope)
+            end
+            
             unless @model_config.list.scopes.empty?
               if params[:scope].blank?
                 unless @model_config.list.scopes.first.nil?
