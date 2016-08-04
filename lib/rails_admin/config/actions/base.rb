@@ -37,8 +37,9 @@ module RailsAdmin
         end
 
         register_instance_option :authorized? do
-          enabled? && (
-            bindings[:controller].try(:authorization_adapter).nil? || bindings[:controller].authorization_adapter.authorized?(authorization_key, bindings[:abstract_model], bindings[:object])
+          enabled? && bindings && (
+            bindings[:controller].try(:authorization_adapter).nil? ||
+            bindings[:controller].authorization_adapter.authorized?(authorization_key, bindings[:abstract_model], bindings[:object])
           )
         end
 
