@@ -69,20 +69,21 @@
               %span= link_to wording_for(:link, export_action), export_path(params.except('set').except('page')), class: 'btn btn-info'
   
   - unless @model_config.list.scopes.empty?
+    - tenancy_scope_param_name = :doncupones_scope
     - most_scopes = @model_config.list.scopes.reject{|scope| scope.to_s.starts_with?("tenancy_scope_for_") }
     - tenancy_scopes = @model_config.list.scopes.select{|scope| scope.to_s.starts_with?("tenancy_scope_for_") }
     %ul.nav.nav-tabs#scope_selector{style: "#{'margin-bottom: 0; border-bottom: none' if tenancy_scopes.any?}"}
       - most_scopes.each_with_index do |scope, index|
         - scope = '_all' if scope.nil?
-        %li{class: "#{'active' if scope.to_s == params[:scope] || (params[:scope].blank? && index == 0)}"}
-          %a{href: index_path(params.merge(scope: scope, page: nil)), class: 'pjax'}
+        %li{class: "#{'active' if (scope.to_s == params[:scope] || (params[:scope].blank? && index == 0)) && params[tenancy_scope_param_name].blank? }"}
+          %a{href: index_path(params.merge(scope: scope, page: nil, tenancy_scope_param_name => nil)), class: 'pjax'}
             = I18n.t("admin.scopes.#{@abstract_model.to_param}.#{scope}", default: I18n.t("admin.scopes.#{scope}", default: scope.to_s.titleize))
     - if tenancy_scopes.any?
       %ul.nav.nav-tabs
         - tenancy_scopes.each_with_index do |scope, index|
           - scope = '_all' if scope.nil?
-          %li{class: "#{'active' if scope.to_s == params[:scope]}", style: 'font-size: 12px'}
-            %a{href: index_path(params.merge(scope: scope, page: nil)), class: 'pjax', style: 'color: #6f6f6f'}
+          %li{class: "#{'active' if scope.to_s == params[tenancy_scope_param_name]}", style: 'font-size: 12px'}
+            %a{href: index_path(params.merge(tenancy_scope_param_name => scope, page: nil, scope: nil)), class: 'pjax', style: 'color: #6f6f6f'}
               = I18n.t("admin.scopes.#{@abstract_model.to_param}.#{scope}", default: I18n.t("admin.scopes.#{scope}", default: scope.to_s.titleize))
 
   = form_tag bulk_action_path(model_name: @abstract_model.to_param), method: :post, id: "bulk_form", class: "form" do

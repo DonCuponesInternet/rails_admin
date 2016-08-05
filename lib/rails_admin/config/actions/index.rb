@@ -29,12 +29,6 @@ module RailsAdmin
           proc do
             @objects ||= list_entries
             
-            the_association_scope = @association.try(:doncupones_scope).presence
-            
-            if the_association_scope
-              @objects = @objects.send(the_association_scope)
-            end
-            
             unless @model_config.list.scopes.empty?
               if params[:scope].blank?
                 unless @model_config.list.scopes.first.nil?
@@ -44,7 +38,14 @@ module RailsAdmin
                 @objects = @objects.send(params[:scope].to_sym)
               end
             end
-
+            
+            tenancy_scope = params[:doncupones_scope].presence
+            
+            if tenancy_scope
+              @objects = @objects.send(tenancy_scope)
+              @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
+            end
+            
             respond_to do |format|
               format.html do
                 render @action.template_name, status: (flash[:error].present? ? :not_found : 200)
