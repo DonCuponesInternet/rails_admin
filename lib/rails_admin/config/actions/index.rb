@@ -39,11 +39,16 @@ module RailsAdmin
               end
             end
             
-            tenancy_scope = params[:doncupones_scope].presence
+            the_association_scope = @association.try(:doncupones_scope).presence # used for autocomplete dropdowns
+            the_params_scope = params[:doncupones_scope].presence # used for plain index actions
+            
+            tenancy_scope = the_association_scope || the_params_scope
             
             if tenancy_scope
               @objects = @objects.send(tenancy_scope)
-              @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
+              if the_params_scope
+                @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
+              end
             end
             
             respond_to do |format|
