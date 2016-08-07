@@ -19,3 +19,24 @@
 //=  require 'rails_admin/ra.widgets'
 //=  require 'rails_admin/ui'
 //=  require 'rails_admin/custom/ui'
+
+dc_locales = <%= all_locales_for_this_country.to_json %>
+
+$(function(){
+  var $enable_for_all_locales = $('.enable-for-all-locales-wrapper input[type="checkbox"]')
+  $enable_for_all_locales.change(function(){
+    if ($enable_for_all_locales.is(':checked')){
+      $('.dc_tab_<%= main_locale_for_this_country %>').click()
+    }
+  })
+  
+  for (var i = 0; i < dc_locales.length; i++){
+    $('.enabled-locales-wrapper input[type="checkbox"][value=' + dc_locales[i] + ']').click(function(){
+      var checked_values = $('input[name="' + $(this).attr('name') + '"]').filter(':checked')
+      var only_one_checked = checked_values.size() == 1
+      if (only_one_checked){
+        $('.dc_tab_' + checked_values.val()).click()
+      }
+    })
+  }
+})  

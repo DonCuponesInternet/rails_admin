@@ -32,7 +32,11 @@ module RailsAdmin
         register_instance_option :css_class do
           "#{self.name}_field"
         end
-
+        
+        register_instance_option :additional_css_class do
+          ""
+        end
+        
         def type_css_class
           "#{type}_type"
         end
