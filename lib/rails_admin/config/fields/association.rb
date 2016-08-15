@@ -22,7 +22,7 @@ module RailsAdmin
             wording = associated.send(amc.object_label_method)
             can_see = !am.embedded? && (show_action = v.action(:show, am, associated))
             can_see ? v.link_to(wording, v.url_for(action: show_action.action_name, model_name: am.to_param, id: associated.id), class: 'pjax') : ERB::Util.html_escape(wording)
-          end.to_sentence.html_safe
+          end.to_sentence(last_word_connector: ', y ').html_safe
         end
 
         # Accessor whether association is visible or not. By default
