@@ -52,7 +52,9 @@
           select: function(event, ui) {
             var option = $('<option></option>').attr('value', ui.item.id).attr('selected', 'selected').text(ui.item.value);
             select.html(option);
-            select.trigger("dc-filtering-select-item-selected", ui.item);
+            if ($(this).parents().filter(function(i, a){ return $(a).hasClass('coupon-store-wrapper') }).size() > 0){
+              select.trigger("coupon-store-dc-filtering-select-item-selected", ui.item);
+            }
             select.trigger("change", ui.item.id);
             self._trigger("selected", event, {
               item: option
