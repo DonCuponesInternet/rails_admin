@@ -62,12 +62,21 @@ module RailsAdmin
                     primary_key_method = @association ? @association.associated_primary_key : @model_config.abstract_model.primary_key
                     label_method = @model_config.filtering_select_to_s ? :filtering_select_to_s : @model_config.object_label_method
                     is_coupon_class = @abstract_model.model == Coupon
+                    is_tenancy_per_locale = @abstract_model.model.is_a?(TenancyPerLocale)
                     @objects.collect { |o|
-                      {
-                        id: o.send(primary_key_method).to_s,
-                        label: "#{o.send(label_method).to_s}",
-                        class: (is_coupon_class ? "coupon-publication-status-#{o.publication_status}" : '')
-                      }
+                      result = 
+                        {
+                          id: o.send(primary_key_method).to_s,
+                          label: "#{o.send(label_method).to_s}",
+                          class: (is_coupon_class ? "coupon-publication-status-#{o.publication_status}" : '')
+                        }
+                      if is_tenancy_per_locale
+                        result.merge!({
+                          enable_for_all_locales: o.enable_for_all_locales,
+                          enabled_locales: o.enabled_locales,
+                        })
+                      end
+                      result
                     }
                   else
                     @objects.to_json(@schema)

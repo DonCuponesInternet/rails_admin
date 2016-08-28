@@ -39,4 +39,12 @@ $(function(){
       }
     })
   }
+  
+  $(document).on('dc-filtering-select-item-selected', function(_, item){
+    $("#coupon_enable_for_all_locales").prop('checked', item.enable_for_all_locales)
+    <% all_locales_for_this_country.map(&:to_s).each do |locale| %>
+    $("#coupon_enabled_locales_<%= locale %>").prop('checked', $.inArray('<%= locale %>', item.enabled_locales) >= 0)
+    <% end %>
+  })
+  
 })  

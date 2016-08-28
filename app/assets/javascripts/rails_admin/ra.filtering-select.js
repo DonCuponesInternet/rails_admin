@@ -52,6 +52,7 @@
           select: function(event, ui) {
             var option = $('<option></option>').attr('value', ui.item.id).attr('selected', 'selected').text(ui.item.value);
             select.html(option);
+            select.trigger("dc-filtering-select-item-selected", ui.item);
             select.trigger("change", ui.item.id);
             self._trigger("selected", event, {
               item: option
@@ -134,7 +135,9 @@
           return {
             html: highlighter(el.label || el.id, request.term),
             value: el.label || el.id,
-            id: el.id || el.value
+            id: el.id || el.value,
+            enable_for_all_locales: el.enable_for_all_locales,
+            enabled_locales: el.enabled_locales
           };
         }
       });
