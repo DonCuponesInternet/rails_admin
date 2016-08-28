@@ -91,6 +91,10 @@ module RailsAdmin
           end
           
           def localized_time time
+            @i18n_reloaded ||= begin # workaround. I believe translations are half-loaded in production.
+              I18n.reload!
+              true
+            end
             ::I18n.l(time, format: strftime_format, locale: :es) # don't use the STRFTIME_FORMAT constant here - not needed
           end
           
