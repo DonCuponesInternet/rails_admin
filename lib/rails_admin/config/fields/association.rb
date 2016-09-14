@@ -102,7 +102,7 @@ module RailsAdmin
           if RailsAdmin::DoncuponesHelpers.is_bulk_edit_controller?(bindings[:controller])
             RailsAdmin::DoncuponesHelpers.unique_value_among_bulk_edit_fields(@bindings, method_name)
           else
-            bindings[:object].send(method_name)
+            bindings[:object].try(method_name)
           end
         end
 
