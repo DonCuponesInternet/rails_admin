@@ -213,7 +213,9 @@ module RailsAdmin
           end
 
           if ar_adapter == 'postgresql'
-            ["(#{@column} ILIKE ?)", @value]
+            # it's important that the column goes quoted, coupons.el-universal produces bad syntax, while "coupons"."el-universal" is OK.
+            quoted_column = @column.split('.').map{|a| %|"#{a}"| }.join('.')
+            ["(#{quoted_column} ILIKE ?)", @value]
           else
             ["(LOWER(#{@column}) LIKE ?)", @value]
           end
