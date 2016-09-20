@@ -46,7 +46,7 @@ module RailsAdmin
     
     def queryable_fields_placeholder
       model = @model_config.abstract_model.to_param
-      queryable_fields.map{|f|
+      queryable_fields.reject(&:no_searchbox_hint).map{|f|
         name = f.name
         I18n.t!("activerecord.attributes.#{model}.#{name}") rescue name.to_s.titleize
       }.join(', ')

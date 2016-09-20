@@ -40,6 +40,7 @@ module RailsAdmin
           register_instance_option :partial do
             :form_field
           end
+          
         end
       end
     end

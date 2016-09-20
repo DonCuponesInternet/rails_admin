@@ -37,6 +37,10 @@ module RailsAdmin
           ""
         end
         
+        register_instance_option :no_searchbox_hint do
+          false
+        end
+        
         def type_css_class
           "#{type}_type"
         end
