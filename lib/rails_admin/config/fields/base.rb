@@ -186,23 +186,36 @@ module RailsAdmin
         #
         # @see RailsAdmin::AbstractModel.properties
         register_instance_option :required? do
-          context = begin
-            if bindings && bindings[:object]
-              bindings[:object].persisted? ? :update : :create
-            else
-              :nil
+          if required_localized_column?
+            present?
+          else
+            context = begin
+              if bindings && bindings[:object]
+                bindings[:object].persisted? ? :update : :create
+              else
+                :nil
+              end
             end
-          end
-          (@required ||= {})[context] ||= !!([name] + children_fields).uniq.detect do |column_name| # rubocop:disable DoubleNegation
-            abstract_model.model.validators_on(column_name).detect do |v|
-              !(v.options[:allow_nil] || v.options[:allow_blank]) &&
-              [:presence, :numericality, :attachment_presence].include?(v.kind) &&
-              (v.options[:on] == context || v.options[:on].blank?) &&
-              (v.options[:if].blank? && v.options[:unless].blank?)
+            (@required ||= {})[context] ||= !!([name] + children_fields).uniq.detect do |column_name| # rubocop:disable DoubleNegation
+              abstract_model.model.validators_on(column_name).detect do |v|
+                !(v.options[:allow_nil] || v.options[:allow_blank]) &&
+                [:presence, :numericality, :attachment_presence].include?(v.kind) &&
+                (v.options[:on] == context || v.options[:on].blank?) &&
+                (v.options[:if].blank? && v.options[:unless].blank?)
+              end
             end
           end
         end
-
+        
+        register_instance_option :required_localized_column? do
+          object = bindings && bindings[:object]
+          if [object, name].all? &:present?
+            if object.class.is_a?(HasLocalizedColumns)
+              !object.class::LOCALIZED_COLUMNS.fetch(name.to_sym, {allow_blank: true})[:allow_blank]
+            end
+          end
+        end
+        
         # Accessor for whether this is a serial field (aka. primary key, identifier).
         #
         # @see RailsAdmin::AbstractModel.properties
