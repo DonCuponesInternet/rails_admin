@@ -228,6 +228,11 @@ body.rails_admin {
   /* Table cells behaviour */
   .table {
     // Cells
+    
+    thead th {
+      vertical-align: top;
+    }
+    
     > thead,
     > tbody,
     > tfoot {
