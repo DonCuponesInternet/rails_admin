@@ -17,7 +17,12 @@ module RailsAdmin
             if request.get? # EDIT
 
               respond_to do |format|
-                format.html { render @action.template_name }
+                format.html {
+                  if @object && [Coupon, Store].include?(@object.class) && @object.deprecated_in.any?
+                    flash.now[:alert] = "Precaución: #{{Coupon => 'este cupón está deshabilitado', Store => 'esta tienda está deshabilitada'}.fetch @object.class} para las apps #{@object.deprecated_in.map{|a|"<b>#{a.upcase}</b>"}.join(', ')}.".html_safe
+                  end
+                  render @action.template_name
+                }
                 format.js   { render @action.template_name, layout: false }
               end
 
