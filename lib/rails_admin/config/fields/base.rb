@@ -158,7 +158,7 @@ module RailsAdmin
         #
         # @see RailsAdmin::AbstractModel.properties
         register_instance_option :label do
-          (@label ||= {})[::I18n.locale] ||= abstract_model.model.human_attribute_name name
+          (@label ||= {})[::I18n.locale] ||= abstract_model.model.human_attribute_name(name).html_safe
         end
 
         register_instance_option :hint do
@@ -211,7 +211,8 @@ module RailsAdmin
           object = bindings && bindings[:object]
           if [object, name].all? &:present?
             if object.class.is_a?(HasLocalizedColumns)
-              !object.class::LOCALIZED_COLUMNS.fetch(name.to_sym, {allow_blank: true})[:allow_blank]
+              opts = object.class::LOCALIZED_COLUMNS.fetch(name.to_sym, {allow_blank: true})
+              !opts[:allow_blank] && !opts[:for_admin_only]
             end
           end
         end
