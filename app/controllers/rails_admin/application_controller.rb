@@ -11,6 +11,21 @@ module RailsAdmin
   end
 
   class ApplicationController < Config.parent_controller.constantize
+    
+    LOCK = Mutex.new
+    
+    prepend_around_action :prevent_concurrent_requests
+    
+    def prevent_concurrent_requests
+      begin
+        LOCK.lock
+        Rails.logger.error "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello"
+        yield
+      ensure
+        LOCK.unlock
+      end    
+    end
+    
     before_filter :_authenticate!
     before_filter :_authorize!
     before_filter :_audit!
