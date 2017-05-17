@@ -19,7 +19,6 @@ module RailsAdmin
     def prevent_concurrent_requests
       begin
         LOCK.lock
-        Rails.logger.error "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello"
         yield
       ensure
         LOCK.unlock
