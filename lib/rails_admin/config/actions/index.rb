@@ -60,8 +60,9 @@ module RailsAdmin
                 output = begin
                   if params[:compact]
                     is_coupon_class = @abstract_model.model == Coupon
+                    is_store_class = @abstract_model.model == Store
                     primary_key_method = @association ? @association.associated_primary_key : @model_config.abstract_model.primary_key
-                    label_method = (@model_config.filtering_select_to_s || is_coupon_class) ? :filtering_select_to_s : @model_config.object_label_method
+                    label_method = (@model_config.filtering_select_to_s || is_coupon_class || is_store_class) ? :filtering_select_to_s : @model_config.object_label_method
                     is_tenancy_per_locale = @abstract_model.model.is_a?(TenancyPerLocale)
                     @objects.collect { |o|
                       result = 
